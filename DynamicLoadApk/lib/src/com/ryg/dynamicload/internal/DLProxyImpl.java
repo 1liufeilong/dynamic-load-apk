@@ -72,9 +72,15 @@ public class DLProxyImpl {
             if (mClass == null) {
                 mClass = packageInfo.activities[0].name;
             }
+            //Finals 修复activity无主题时打开activity黑屏BUG
+            int defaultTheme = packageInfo.applicationInfo.theme;
             for (ActivityInfo a : packageInfo.activities) {
                 if (a.name.equals(mClass)) {
                     mActivityInfo = a;
+                    //Finals ADD
+                    if (mActivityInfo.theme == 0 && defaultTheme != 0) {
+                        mActivityInfo.theme = defaultTheme;
+                    }
                 }
             }
         }
