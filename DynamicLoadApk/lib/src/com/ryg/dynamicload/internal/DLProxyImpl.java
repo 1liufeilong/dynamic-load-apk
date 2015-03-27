@@ -72,10 +72,23 @@ public class DLProxyImpl {
             if (mClass == null) {
                 mClass = packageInfo.activities[0].name;
             }
+            //Finals 修复主题样式没有配置的时候BUG
+            int defaultTheme = packageInfo.applicationInfo.theme;
             for (ActivityInfo a : packageInfo.activities) {
                 if (a.name.equals(mClass)) {
                     mActivityInfo = a;
                 }
+                //Finals 修复主题样式没有配置的时候BUG
+                if (mActivityInfo.theme == 0 && defaultTheme != 0) {
+						mActivityInfo.theme = defaultTheme;
+				} else {
+					if (Build.VERSION.SDK_INT >= 14) {
+						mActivityInfo.theme = android.R.style.Theme_DeviceDefault;
+					} else {
+						mActivityInfo.theme = android.R.style.Theme;
+					}
+				}
+				break;
             }
         }
     }
