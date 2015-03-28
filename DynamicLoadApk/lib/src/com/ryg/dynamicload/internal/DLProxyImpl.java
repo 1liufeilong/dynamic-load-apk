@@ -80,7 +80,7 @@ public class DLProxyImpl {
                     //Finals ADD 修复主题没有配置的时候插件异常
                     if (mActivityInfo.theme == 0 && defaultTheme != 0) {
 		       mActivityInfo.theme = defaultTheme;
-		    } else {
+		    } else if(mActivityInfo.theme == 0) {
 			if (Build.VERSION.SDK_INT >= 14) {
 			    mActivityInfo.theme = android.R.style.Theme_DeviceDefault;
 			} else {
